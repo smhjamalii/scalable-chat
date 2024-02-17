@@ -1,0 +1,7 @@
+server:
+  port: 9090
+spring:
+  datasource:
+    url: jdbc:postgresql://db:5432/chatdb
+    username: chatdb
+    password: root

@@ -1,0 +1,35 @@
+services:
+   chat-service:
+      build:
+         context: ./
+         dockerfile: Dockerfile
+         args:
+            PROJECT_VERSION: 0.0.1-SNAPSHOT         
+      image: chat-service
+      ports:
+         - 9093:9090
+      #environment:
+      #   PROJECT_VERSION: 0.0.1-SNAPSHOT
+   rabbitmq:
+      image: rabbitmq:management-alpine
+      ports:
+         - 5672:5672
+         - 15672:15672
+   db:
+      image: postgres
+      restart: always
+      shm_size: 128mb
+      ports:
+         - 5432:5432
+      environment:
+         POSTGRES_PASSWORD: root         
+         POSTGRES_USER: chatdb
+         POSTGRES_DB: chatdb
+         #POSTGRES_PASSWORD_FILE: /file
+
+   adminer:
+      image: adminer
+      restart: always
+      ports:
+         - 15432:8080         
+         
