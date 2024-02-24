@@ -10,20 +10,19 @@ import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import ir.encoding.msg.constant.DefaultExchanges;
+
 @Configuration
 public class AMQPConfig {
-
-	private static final String DEFAULT_EXCHANGE_NAME = "DEX";
-	private static final String DEFAULT_QUEUE_NAME = "DEQ";
 	
 	@Bean
 	Queue deq() {
-		return new Queue(DEFAULT_QUEUE_NAME);
+		return new Queue(DefaultExchanges.DEFAULT_QUEUE_NAME);
 	}
 	
 	@Bean
 	DirectExchange dex() {
-		return new DirectExchange(DEFAULT_EXCHANGE_NAME);
+		return new DirectExchange(DefaultExchanges.DEFAULT_EXCHANGE_NAME);
 	}
 	
 	@Bean
@@ -35,7 +34,7 @@ public class AMQPConfig {
 	SimpleMessageListenerContainer container(ConnectionFactory cf, MessageListenerAdapter mla) {
 		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
 		container.setConnectionFactory(cf);
-		container.setQueueNames(DEFAULT_QUEUE_NAME);
+		container.setQueueNames(DefaultExchanges.DEFAULT_QUEUE_NAME);
 		container.setMessageListener(mla);
 		return container;
 	}
